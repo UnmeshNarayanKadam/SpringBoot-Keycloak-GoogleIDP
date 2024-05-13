@@ -73,3 +73,15 @@ Integrating google as IDP:
 		e) Enter the Client ID and Client Secret values provided by Google into the corresponding fields on the Add Google 
        provider screen in Keycloak 
 
+Demonstration:
+
+	Now we’re ready to test our application. To run a Spring Boot application, we can start it easily through an IDE or run this command in the terminal:
+	mvn clean spring-boot:run
+	On visiting http://localhost:8081 we see the homepage where we can see the login link. When we click on login, we've been redirected to authenticate through Keycloak to see if we’re authorized to view this content.
+
+	There are two options to login:
+	1) Keycloak
+	2) Google
+ 
+	http://localhost:8081/customers is only accessible by users having the role as "user".
+	http://localhost:8081/admin is only accessible by users having the role as "admin".
