@@ -1,0 +1,52 @@
+Install java-17
+	sudo apt install openjdk-17-jdk openjdk-17-jre
+
+Install Keycloak
+	Go to https://www.keycloak.org/downloads and download latest tar.gz file
+	Run cmd : sudo tar -xvzf keycloak-24.0.3.tar.gz
+	Go to bin folder and run cmd : sudo ./kc.sh start-dev --http-port=8081
+	Keycloak is start running on http://0.0.0.0:8081
+
+Keycloak setup
+	Create admin account and sign in.
+
+	Create realm (A realm manages a set of users, credentials, roles, and groups. A user belongs to and logs into a realm. Realms are isolated from one another and can only manage and authenticate the users that they control.) 
+		Realm name: SpringBootDemoKeyCloak
+
+	Create Clients (Clients are applications and services that can request authentication of a user.) 
+		Client type: OIDC
+		client ID: springboot-keycloak-demo-client
+		Root URL: Where spring boot app run (http://localhost:8081)
+		Home URL: http://localhost:8081
+		Valid redirect URIs: http://localhost:8081/* 
+		Valid post logout redirect URIs: http://localhost:8081
+
+	Create client roles(specific to individual client applications within the realm)
+		for ex: admin and user
+
+	Create realm roles(available across all clients within that realm. Realm roles are typically used for global permissions that apply to all applications within the realm)
+		for ex: realm_admin and realm_user
+
+	Go to realm role and assign associated client role
+		for ex: realm_admin is associated with admin
+
+	Create user
+		Username: app_admin
+		Must enter first name and Last name otherwise it will give you the "Account is not fully set up" error
+		Go to role mapping and assign role to current user
+		Go to credentials and set password
+
+	Now to see the configuration details of realm hit this url http://localhost:8080/realms/SpringBootDemoKeyCloak/.well-known/openid-configuration 
+
+	To get the token hit the token_endpoint which is given in above configuration 
+		Endpoint: "http://localhost:8080/realms/SpringBootDemoKeyCloak/protocol/openid-connect/token"
+		Method: POST
+		Body -> x-www-form-urlencoded -> 
+			client_id: springboot-keycloak-demo-client
+			username: app_admin
+			password: app_admin
+			grant_type: password
+
+
+
+
